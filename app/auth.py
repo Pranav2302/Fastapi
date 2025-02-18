@@ -8,7 +8,7 @@ from app.database.database import get_db
 from app.models.user import User
 
 # Configuration
-SECRET_KEY = "pranav"  # Change this to a secure secret key
+SECRET_KEY = "pranav"  # a secure secret key
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
