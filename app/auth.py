@@ -1,6 +1,6 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status  #HTTP_401_UNAUTHORIZED can use 
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
+from jose import JWTError, jwt #handling jwt and allow encoding and decoding
 from datetime import datetime, timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -37,7 +37,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession
         raise credentials_exception
         
     result = await db.execute(select(User).filter(User.username == username))
-    user = result.scalar()
+    user = result.scalar()   # scalar () - Retrieves a single row (or None if not found).
     
     if user is None:
         raise credentials_exception

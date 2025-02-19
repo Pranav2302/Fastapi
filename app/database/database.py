@@ -6,7 +6,7 @@ DATABASE_URL = "sqlite+aiosqlite:///./students.db"
 engine = create_async_engine(
     DATABASE_URL,
     connect_args={"check_same_thread": False},
-    echo=True
+    echo=True  # Prints SQL queries to console - helpful for debugging
 )
 
 SessionLocal = sessionmaker(

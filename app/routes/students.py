@@ -22,7 +22,7 @@ async def create_student(student: StudentCreate, db: AsyncSession = Depends(get_
     await db.refresh(new_student)
     return new_student
 
-@router.get("/{student_id}", response_model=StudentResponse)
+@router.get("/{student_id}", response_model=StudentResponse)  #specifies the schema (studentResponse) of the response returned by the endpoint. 
 async def get_student(student_id: int, db: AsyncSession = Depends(get_db)):
     student = await db.get(Student, student_id)
     if not student:
