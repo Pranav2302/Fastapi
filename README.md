@@ -16,7 +16,6 @@ A  🚀FastAPI-based REST API for managing students, courses, and enrollments wi
 
 - **FastAPI**: Modern, fast web framework for building APIs
 - **SQLAlchemy**: SQL toolkit and ORM
-- **Alembic**: Database migration tool
 - **Pydantic**: Data validation using Python type annotations
 - **JWT**: JSON Web Tokens for authentication
 - **SQLite**: Lightweight database
@@ -44,7 +43,7 @@ A  🚀FastAPI-based REST API for managing students, courses, and enrollments wi
 
 1️⃣**Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/Pranav2302/Fastapi>
    cd student-management-system
    ```
 
@@ -86,7 +85,9 @@ Once the server is running, you can access:
    ```
 
 ## Project Structure
-<div style="font-family: monospace; white-space: pre;">
+<div style="display: flex; justify-content: space-between; gap: 20px;">
+
+<pre>
 ├── <strong>app/</strong>
 │   ├── <strong>models/</strong> # Database models
 │   ├── <strong>routes/</strong> # API endpoints
@@ -96,7 +97,9 @@ Once the server is running, you can access:
 │   └── <strong>main.py</strong> # FastAPI application
 ├── <strong>tests/</strong> # Test cases
 └── <strong>alembic.ini</strong> # Alembic configuration
-</div>
+</pre>
+
+<div>
 
 
 
