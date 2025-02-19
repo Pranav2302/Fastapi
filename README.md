@@ -96,7 +96,6 @@ Once the server is running, you can access:
 │   ├── <strong>auth.py</strong> # Authentication logic
 │   └── <strong>main.py</strong> # FastAPI application
 ├── <strong>tests/</strong> # Test cases
-└── <strong>alembic.ini</strong> # Alembic configuration
 </pre>
 
 <div>
