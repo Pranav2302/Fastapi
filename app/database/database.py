@@ -5,7 +5,7 @@ DATABASE_URL = "sqlite+aiosqlite:///./students.db"
 
 engine = create_async_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False},
+    connect_args={"check_same_thread": False}, #disables this restriction, allowing the connection to be used across multiple threads.
     echo=True  # Prints SQL queries to console - helpful for debugging
 )
 
@@ -27,3 +27,9 @@ async def get_db():
             raise
         finally:
             await session.close()
+
+
+'''
+SQLite by default prevents multiple threads from sharing the same database connection.
+Since FastAPI handles requests asynchronously, multiple requests might need access to the same DB connection.
+'''

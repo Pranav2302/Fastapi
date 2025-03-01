@@ -1,3 +1,8 @@
+#if we delete this file - wew will lose the automated tests for student-related functionalities . 
+#we will not have way to check functionalities work correct after change to code.
+
+
+#It tests the student creation API endpoint and verifies authentication is working
 from fastapi.testclient import TestClient
 from main import app
 

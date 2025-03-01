@@ -7,11 +7,7 @@ from app.models.course import Course
 from app.database.database import get_db
 from app.auth import get_current_user
 
-router = APIRouter(
-    prefix="/enrollments",
-    tags=["enrollments"],
-    dependencies=[Depends(get_current_user)]
-)
+router = APIRouter(prefix="/enrollments",tags=["enrollments"],dependencies=[Depends(get_current_user)])
 
 @router.post("/")
 async def enroll_student(student_id: int, course_id: int, db: AsyncSession = Depends(get_db)):

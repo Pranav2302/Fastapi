@@ -6,6 +6,7 @@ from app.schemas.student import StudentCreate, StudentResponse
 from app.database.database import get_db
 from app.auth import get_current_user
 
+#dependencies apply to all routes of that router , router can test in isolation, prefix - don’t have to repeat the prefix for each route just include router in main app
 router = APIRouter(prefix="/students", dependencies=[Depends(get_current_user)])
 
 @router.post("/", response_model=StudentResponse)
