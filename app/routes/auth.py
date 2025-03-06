@@ -1,11 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
+#from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import Form
+#from typing import Annotated
+#from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from app.database.database import get_db
 from app.models.user import User
 from app.auth import create_access_token
 from passlib.context import CryptContext
+
+#class FormData(BaseModel):
+#    username : str
+#    password : str    
 
 #tags - groups all the routes under router of auth category 
 router = APIRouter(tags=["auth"]) #used for api documentation , help in organize and group endpoints in auto generated openapi(swagger)docs
@@ -19,11 +26,11 @@ def get_password_hash(password):
 
 @router.post("/login")
 #dependencies (objects, functions) are automatically provided to a function/class instead of being created manually inside it.
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(User).filter(User.username == form_data.username))
+async def login(username : str = Form(...), password: str = Form(...), db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(User).filter(User.username == username))
     user = result.scalar()  # Returns first match or none 
     
-    if not user or not verify_password(form_data.password, user.password):
+    if not user or not verify_password(password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -34,7 +41,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSessi
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/register")
-async def register(username: str, password: str, db: AsyncSession = Depends(get_db)):   #type hint is used as parameter and type of that parameter
+async def register(username: str, password: str, fullName:str ,db: AsyncSession = Depends(get_db)):   #type hint is used as parameter and type of that parameter
     result = await db.execute(select(User).filter(User.username == username))
     if result.scalar():
         raise HTTPException(
@@ -43,7 +50,7 @@ async def register(username: str, password: str, db: AsyncSession = Depends(get_
         )
     
     hashed_password = get_password_hash(password)
-    new_user = User(username=username, password=hashed_password)
+    new_user = User(username=username, password=hashed_password,fullName=fullName)
     db.add(new_user)
     await db.commit()
     return {"message": "User created successfully"}

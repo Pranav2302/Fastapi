@@ -14,6 +14,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
+
 def create_access_token(data: dict):   #data type giving here is type hinting , it is done by pydantic which validates the data of incoming reponse, 
     to_encode = data.copy()
     #expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)

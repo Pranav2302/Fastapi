@@ -4,13 +4,12 @@
 
 #It tests the student creation API endpoint and verifies authentication is working
 from fastapi.testclient import TestClient
-from main import app
-
+from app.main import app  
 client = TestClient(app)
 
 def test_create_student():
     # Get token first
-    login_response = client.post("/auth/login", data={"username": "admin", "password": "secret"})
+    login_response = client.post("/login", data={"username": "admin", "password": "secret"})
     token = login_response.json()["access_token"]
     
     response = client.post(

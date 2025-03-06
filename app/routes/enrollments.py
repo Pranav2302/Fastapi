@@ -17,6 +17,16 @@ async def enroll_student(student_id: int, course_id: int, db: AsyncSession = Dep
     if not student or not course:
         raise HTTPException(status_code=404, detail="Student or course not found")
     
+    # Check for existing enrollment
+    result = await db.execute(
+        select(Enrollment).filter(
+            Enrollment.student_id == student_id,
+            Enrollment.course_id == course_id
+        )
+    )
+    if result.scalar():
+        raise HTTPException(status_code=400, detail="Student is already enrolled in this course")
+    
     # Create enrollment
     enrollment = Enrollment(student_id=student_id, course_id=course_id)
     db.add(enrollment)
@@ -31,9 +41,8 @@ async def get_enrolled_courses(student_id: int, db: AsyncSession = Depends(get_d
     
     # Fetch enrolled course IDs
     result = await db.execute(
-        select(Course)
-        .join(Enrollment)
+        select(Enrollment.course_id)
         .filter(Enrollment.student_id == student_id)
     )
-    courses = result.scalars().all()
-    return {"enrolled_courses": courses}
+    course_ids = [course_id for (course_id,) in result]
+    return {"enrolled_courses": course_ids}
